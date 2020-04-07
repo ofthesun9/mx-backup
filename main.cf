@@ -1,0 +1,35 @@
+#relay_domains variable is set to $mxbck_relay_domains during startup
+# It should be the DOMAIN for which the backup will operate
+#relay_domains = example.com
+
+# myhostname variable is set with $mxbck_myhostname during startup
+# It should by the fqdn indicated in your "example.com" DNS MX field
+#myhostname = mx2.example.com 
+
+# logging
+maillog_file = /dev/stdout
+
+mynetworks_style = host
+
+smtpd_helo_required = yes
+
+smtpd_client_restrictions =
+  reject_non_fqdn_sender,
+  reject_unknown_sender_domain,
+  reject_unknown_recipient_domain,
+  reject_unverified_recipient,
+  permit
+
+smtpd_relay_restrictions = reject_unauth_destination
+
+# tls
+smtp_tls_security_level = may
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+smtp_use_tls = yes
+smtp_tls_note_starttls_offer = yes
+smtp_tls_loglevel = 1 
+
+smtpd_tls_security_level = may
+smtpd_tls_key_file = /config/certs/live/mxbck/privkey.pem
+smtpd_tls_cert_file = /config/certs/live/mxbck/fullchain.pem
+
